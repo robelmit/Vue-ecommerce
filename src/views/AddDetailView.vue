@@ -1,81 +1,86 @@
 <template>
   <div v-if="add">
-    <div v-if="showspinner" class="spinner">
-      <span class="loader"></span>
+    <div @click="router.push('/adds')" class="btn btn-link rounded-circle mr-3 my-2">
+      <i style="font-size: 25px" class="fa fa-arrow-alt-circle-left"></i>
     </div>
-    <div class="configure">
-      <h1 class="h3">Adds detail</h1>
-      <button
-        data-toggle="modal"
-        data-target="#myModal"
-        type="button"
-        class="btn btn-danger btn-sm"
-      >
-        <i class="fas fa-trash fa-sm text-white"></i>
-        Delete add
-      </button>
-    </div>
-    <div class="homeui">
-      <div>
-        <carousel autoplay="3000" wrap-around="true" class="Slider" :items-to-show="1.4">
-          <slide v-for="add in add.images" :key="add">
-            <img :src="add.url" class="image" alt="" />
-          </slide>
-
-          <template #addons>
-            <navigation />
-            <pagination />
-          </template>
-        </carousel>
+    <div class="items">
+      <div v-if="showspinner" class="spinner">
+        <span class="loader"></span>
       </div>
-      <div class="items" style="margin-left: 20px">
-        <h5 style="color: #4e73df">{{ add.title }}</h5>
-        <div style="display: flex">
-          <p>category</p>
-          <p style="margin-left: 10px">{{ add.catagory }}</p>
+      <div class="configure">
+        <h1 class="h3">Adds detail</h1>
+        <button
+          data-toggle="modal"
+          data-target="#myModal"
+          type="button"
+          class="btn btn-danger btn-sm"
+        >
+          <i class="fas fa-trash fa-sm text-white"></i>
+          Delete add
+        </button>
+      </div>
+      <div class="homeui">
+        <div>
+          <carousel autoplay="3000" wrap-around="true" class="Slider" :items-to-show="1.4">
+            <slide v-for="add in add.images" :key="add">
+              <img :src="add.url" class="image" alt="" />
+            </slide>
+
+            <template #addons>
+              <navigation />
+              <pagination />
+            </template>
+          </carousel>
         </div>
-        <div style="display: flex">
-          <p>price</p>
-          <p style="margin-left: 10px; color: #4e73df">{{ add.price }} birr</p>
-        </div>
-        <div style="display: flex">
-          <p>description</p>
-          <p style="margin-left: 10px">{{ add.description }}</p>
-        </div>
-        <div class="postedby">
-          <div style="margin-top: 10px; font-size: 13px">
-            <p style="font-size: 15px !important">posted by</p>
-            <div class="flexcontain">
-              <div>
-                <img :src="add.images[0].url" class="imageposted" alt="" />
-              </div>
-              <div style="margin: 0px 8px !important">
-                <p style="margin: 0px 0px !important">{{ add.postedBy.name }}</p>
-                <p style="margin: 2px 0px !important">{{ add.postedBy.phoneNumber }}</p>
+        <div style="margin-left: 20px">
+          <h5 style="color: #4e73df">{{ add.title }}</h5>
+          <div style="display: flex">
+            <p>category</p>
+            <p style="margin-left: 10px">{{ add.catagory }}</p>
+          </div>
+          <div style="display: flex">
+            <p>price</p>
+            <p style="margin-left: 10px; color: #4e73df">{{ add.price }} birr</p>
+          </div>
+          <div style="display: flex">
+            <p>description</p>
+            <p style="margin-left: 10px">{{ add.description }}</p>
+          </div>
+          <div class="postedby">
+            <div style="margin-top: 10px; font-size: 13px">
+              <p style="font-size: 15px !important">posted by</p>
+              <div class="flexcontain">
+                <div>
+                  <img :src="add.images[0].url" class="imageposted" alt="" />
+                </div>
+                <div style="margin: 0px 8px !important">
+                  <p style="margin: 0px 0px !important">{{ add.postedBy.name }}</p>
+                  <p style="margin: 2px 0px !important">{{ add.postedBy.phoneNumber }}</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="modal fade" id="myModal">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <!-- Modal Header -->
-          <div class="modal-header">
-            <h4 class="modal-title">Delete add</h4>
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-          </div>
+      <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">Delete add</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
 
-          <!-- Modal body -->
-          <div class="modal-body">Are you sure you want to delete add</div>
+            <!-- Modal body -->
+            <div class="modal-body">Are you sure you want to delete add</div>
 
-          <!-- Modal footer -->
-          <div class="modal-footer">
-            <button @click="deleteadd" type="button" class="btn btn-danger" data-dismiss="modal">
-              Delete
-            </button>
-            <button type="button" class="btn btn-cancel" data-dismiss="modal">Cancel</button>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+              <button @click="deleteadd" type="button" class="btn btn-danger" data-dismiss="modal">
+                Delete
+              </button>
+              <button type="button" class="btn btn-cancel" data-dismiss="modal">Cancel</button>
+            </div>
           </div>
         </div>
       </div>
@@ -168,7 +173,7 @@ function deleteadd() {
   padding-bottom: 20px;
 }
 .items {
-  padding: 20px;
+  /* padding: 20px; */
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1);
 }
 .homeui {

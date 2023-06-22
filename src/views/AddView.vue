@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="h3">Adds </h1>
+    <h1 class="h3">Adds</h1>
     <div class="contentloader">
       <div class="spinner">
         <span v-if="showspinner" class="loader"></span>
@@ -54,8 +54,9 @@ const adds = ref(null)
 const currentpage = ref(1)
 const totalpages = ref(null)
 const showspinner = ref(null)
+
 function getadds() {
-  API.getadds(currentpage.value).then((response) => {
+  API.getadds(currentpage.value, store.searchitem, store.makerequest).then((response) => {
     console.log(response.data)
     setTimeout(() => {
       adds.value = response.data
@@ -64,6 +65,11 @@ function getadds() {
   })
 }
 
+function search() {
+  if (store.searchitem) {
+    getadds()
+  }
+}
 watch(currentpage, () => {
   showspinner.value = true
 
@@ -72,8 +78,9 @@ watch(currentpage, () => {
 
   console.log('page is changing')
 })
+
 onMounted(() => {
-  API.getadds(currentpage.value).then((response) => {
+  API.getadds(currentpage.value, store.searchitem).then((response) => {
     console.log(response.data)
     adds.value = response.data
     currentpage.value = response.data.page

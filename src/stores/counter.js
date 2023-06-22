@@ -1,16 +1,35 @@
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { defineStore } from 'pinia'
+
+
+import { useRoute } from 'vue-router'
 import API from '../API/API'
 import router from '../router'
 export const useCounterStore = defineStore('counter', () => {
+  const route = useRoute()
   const count = ref(0)
   const userpro = ref(null)
   const searchitem = ref(null)
   const loggedinerror = ref(null)
   const doubleCount = computed(() => count.value * 2)
+  const showinput = ref(false)
+  const makerequest = ref(false)
   const isloggedin = computed(() => {
     if (localStorage.token) return true
     else return false
+  })
+  watch(route, () => {
+    console.log('page is really changing' + route.name)
+
+    if (route.name == 'users' || route.name == 'adds') {
+      console.log('page is really changing' + route.name)
+
+      showinput.value = true
+
+    }
+    else {
+      showinput.value = false
+    }
   })
   function changecount(val) {
     count.value = val
@@ -28,7 +47,7 @@ export const useCounterStore = defineStore('counter', () => {
   }
   function getuser() {
     API.getuser().then(response => {
-     // console.log(response.data);
+      // console.log(response.data);
       //WlocalStorage.token = response.data.token
       userpro.value = response.data
       // router.push('/')
@@ -44,5 +63,5 @@ export const useCounterStore = defineStore('counter', () => {
   }
 
 
-  return { searchitem,getuser, logout, loggedinerror, isloggedin, userpro, login, count, changecount, doubleCount }
+  return { makerequest, showinput, searchitem, getuser, logout, loggedinerror, isloggedin, userpro, login, count, changecount, doubleCount }
 })

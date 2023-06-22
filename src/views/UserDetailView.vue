@@ -1,6 +1,10 @@
 <template>
   <div v-if="user">
+    <div @click="router.push('/users')" class="btn btn-link rounded-circle mr-3 my-2">
+      <i style="font-size: 25px" class="fa fa-arrow-alt-circle-left"></i>
+    </div>
     <h1 class="h3">User detail view</h1>
+
     <div class="cardcontainer">
       <div class="card">
         <div class="imgpro">

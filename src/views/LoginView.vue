@@ -71,7 +71,7 @@ export default {
 }
 @media screen and (max-width: 700px) {
   .nicer {
-    width: 60%;
+    width: 100%;
   }
 }
 </style>

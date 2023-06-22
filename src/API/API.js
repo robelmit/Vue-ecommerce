@@ -1,5 +1,6 @@
 import axios from 'axios';
 const URL = "http://localhost:5000"
+
 const Axios = axios.create({
   baseURL: "http://localhost:5000",
   headers: {
@@ -7,14 +8,15 @@ const Axios = axios.create({
   },
 });
 
+
 export default {
   registeruser(user) {
     console.log(user);
-    // const config = {
-    //   headers: {
-    //     authorization: `Bearer ${localStorage.token}`,
-    //   },
-    // };
+    const config = {
+      headers: {
+        authorization: `Bearer ${localStorage.token}`,
+      },
+    };
 
     return Axios.post('/auth/signup', user);
   },
@@ -54,14 +56,19 @@ export default {
 
     return Axios.delete(`api/users/user/${id}`, config);
   },
-  getadds(page) {
+  getadds(page, keyword, makerequest) {
     const config = {
       headers: {
         authorization: `Bearer ${localStorage.token}`,
       },
     };
 
-    return Axios.get(`api/adds/oll?pageNumber=${page}`, config);
+    if (keyword && makerequest) {
+
+      return Axios.get(`api/adds/oll?keyword=${keyword}&pageNumber=${page}`, config);
+    }
+    else return Axios.get(`api/adds/oll?pageNumber=${page}`, config);
+
   },
   getspecificadd(id) {
     const config = {
@@ -81,14 +88,18 @@ export default {
 
     return Axios.delete(`api/adds/${id}`, config);
   },
-  getusers(page) {
+  getusers(page, keyword, makerequest) {
     const config = {
       headers: {
         authorization: `Bearer ${localStorage.token}`,
       },
     };
+    if (keyword && makerequest) {
 
-    return Axios.get(`api/users/oll?pageNumber=${page}`, config);
+      return Axios.get(`api/users/oll?keyword=${keyword}&pageNumber=${page}`, config);
+    }
+    else return Axios.get(`api/users/oll?pageNumber=${page}`, config);
+
   },
   gettotalcount() {
     const config = {

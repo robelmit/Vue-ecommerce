@@ -53,8 +53,9 @@ store.searchitem = null
 const currentpage = ref(1)
 const totalpages = ref(null)
 const showspinner = ref(null)
+
 function getusers() {
-  API.getusers(currentpage.value)
+  API.getusers(currentpage.value, store.searchitem, store.makerequest)
     .then((response) => {
       console.log(response.data)
       currentpage.value = response.data.page
@@ -77,8 +78,17 @@ watch(currentpage, () => {
 
   console.log('page is changing')
 })
+watch(store, () => {
+  if (store.makerequest) {
+    showspinner.value = true
+    currentpage.value = 1
+    getusers()
+    users.value = null
+    // store.makerequest = true
+  }
+})
 onMounted(() => {
-  API.getusers(currentpage.value)
+  API.getusers(currentpage.value, store.searchitem)
     .then((response) => {
       console.log(response.data)
       users.value = response.data

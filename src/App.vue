@@ -8,12 +8,18 @@ const showmenus = ref(true)
 const ishome = ref(true)
 const isadds = ref(false)
 const isusers = ref(false)
+const showtitle = ref(false)
 const store = useCounterStore()
 const placeholder = ref('Search for users or adds')
 const route = useRoute()
+function make() {
+  console.log('button is pressed')
+  store.makerequest = true
+}
 onMounted(() => {
   if (route.name == 'home') {
     ishome.value = true
+    showtitle.value = true
   }
   console.log(route.name)
   console.log('sent request')
@@ -24,17 +30,24 @@ onMounted(() => {
       ishome.value = true
       isusers.value = false
       isadds.value = false
+      showtitle.value = true
+
       placeholder.value = 'Search for users or adds'
     } else if (route.name == 'adds') {
       ishome.value = false
       isusers.value = false
       isadds.value = true
       placeholder.value = 'Search for  adds'
+      showtitle.value = false
     } else if (route.name == 'users') {
       ishome.value = false
       isusers.value = true
       isadds.value = false
+      showtitle.value = false
+
       placeholder.value = 'Search for users '
+    } else {
+      showtitle.value = false
     }
   })
 })
@@ -114,10 +127,12 @@ console.log(route.name)
           </button>
 
           <!-- Topbar Search -->
+          <h1 v-if="showtitle" class="h6 nicerbro">Ecommerce Made Easier</h1>
+
           <form
             class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
           >
-            <div v-if="route.name == '/adds' || route.name == '/users'" class="input-group">
+            <div v-if="store.showinput" class="input-group">
               <input
                 type="text"
                 class="form-control bg-light border-0 small"
@@ -127,7 +142,7 @@ console.log(route.name)
                 v-model="store.searchitem"
               />
               <div class="input-group-append">
-                <button class="btn btn-primary" type="button">
+                <button @click="make" class="btn btn-primary" type="button">
                   <i class="fas fa-search fa-sm"></i>
                 </button>
               </div>
@@ -159,12 +174,13 @@ console.log(route.name)
                     <input
                       type="text"
                       class="form-control bg-light border-0 small"
-                      placeholder="Search for..."
                       aria-label="Search"
                       aria-describedby="basic-addon2"
+                      v-model="store.searchitem"
+                      :placeholder="placeholder"
                     />
                     <div class="input-group-append">
-                      <button class="btn btn-primary" type="button">
+                      <button @click="make" class="btn btn-primary" type="button">
                         <i class="fas fa-search fa-sm"></i>
                       </button>
                     </div>
@@ -202,34 +218,9 @@ console.log(route.name)
                   </div>
                   <div>
                     <div class="small text-gray-500">December 12, 2019</div>
-                    <span class="font-weight-bold">A new monthly report is ready to download!</span>
+                    <span class="font-weight-bold">Welcome to admin panel</span>
                   </div>
                 </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    <div class="icon-circle bg-success">
-                      <i class="fas fa-donate text-white"></i>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="small text-gray-500">December 7, 2019</div>
-                    $290.29 has been deposited into your account!
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    <div class="icon-circle bg-warning">
-                      <i class="fas fa-exclamation-triangle text-white"></i>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="small text-gray-500">December 2, 2019</div>
-                    Spending Alert: We've noticed unusually high spending for your account.
-                  </div>
-                </a>
-                <a class="dropdown-item text-center small text-gray-500" href="#"
-                  >Show All Alerts</a
-                >
               </div>
             </li>
 
@@ -260,58 +251,10 @@ console.log(route.name)
                     <div class="status-indicator bg-success"></div>
                   </div>
                   <div class="font-weight-bold">
-                    <div class="text-truncate">
-                      Hi there! I am wondering if you can help me with a problem I've been having.
-                    </div>
-                    <div class="small text-gray-500">Emily Fowler · 58m</div>
+                    <div class="text-truncate">New messages will appear here</div>
+                    <div class="small text-gray-500">Admin</div>
                   </div>
                 </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="dropdown-list-image mr-3">
-                    <img class="rounded-circle" src="img/undraw_profile_2.svg" alt="..." />
-                    <div class="status-indicator"></div>
-                  </div>
-                  <div>
-                    <div class="text-truncate">
-                      I have the photos that you ordered last month, how would you like them sent to
-                      you?
-                    </div>
-                    <div class="small text-gray-500">Jae Chun · 1d</div>
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="dropdown-list-image mr-3">
-                    <img class="rounded-circle" src="img/undraw_profile_3.svg" alt="..." />
-                    <div class="status-indicator bg-warning"></div>
-                  </div>
-                  <div>
-                    <div class="text-truncate">
-                      Last month's report looks great, I am very happy with the progress so far,
-                      keep up the good work!
-                    </div>
-                    <div class="small text-gray-500">Morgan Alvarez · 2d</div>
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="dropdown-list-image mr-3">
-                    <img
-                      class="rounded-circle"
-                      src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
-                      alt="..."
-                    />
-                    <div class="status-indicator bg-success"></div>
-                  </div>
-                  <div>
-                    <div class="text-truncate">
-                      Am I a good boy? The reason I ask is because someone told me that people say
-                      this to all dogs, even if they aren't good...
-                    </div>
-                    <div class="small text-gray-500">Chicken the Dog · 2w</div>
-                  </div>
-                </a>
-                <a class="dropdown-item text-center small text-gray-500" href="#"
-                  >Read More Messages</a
-                >
               </div>
             </li>
 
@@ -354,13 +297,7 @@ console.log(route.name)
                   Activity Log
                 </a>
                 <div class="dropdown-divider"></div>
-                <a
-                  @click="store.logout()"
-                  class="dropdown-item"
-                  href="#"
-                  data-toggle="modal"
-                  data-target="#logoutModal"
-                >
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                   Logout
                 </a>
@@ -390,9 +327,47 @@ console.log(route.name)
       </footer>
       <!-- End of Footer -->
     </div>
-    <!-- End of Content Wrapper -->
+    <div class="modal fade" id="logoutModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title">Delete User</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+
+          <!-- Modal body -->
+          <div class="modal-body">Are you sure you want to delete user</div>
+
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button
+              @click="store.logout()"
+              type="button"
+              class="btn btn-danger"
+              data-dismiss="modal"
+            >
+              Logout
+            </button>
+            <button type="button" class="btn btn-cancel" data-dismiss="modal">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End
+     of Content Wrapper -->
   </div>
 </template>
-
+<style scoped>
+@media screen and (max-width: 700px) {
+  .nicerbro {
+    display: none;
+  }
+}
+.nicerbro {
+  color: #4e73df;
+  font-weight: bold;
+}
+</style>
 
 
